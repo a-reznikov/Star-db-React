@@ -1,58 +1,28 @@
+import React from 'react';
+
+import Header from '../header';
+import RandomPlanet from '../random-planet';
+import ItemList from '../item-list';
+import PersonDetails from '../person-details';
+
 import './app.css';
 
-class SwapiService {
-
-  _apiBase = 'https://swapi.dev/api';
-
-  async getResource(url) {
-    const response = await fetch(`${this._apiBase}${url}`);
-
-    if (!response.ok) {
-      throw new Error(`Could not fetch ${`${this._apiBase}${url}`}, received ${response.status}`)
-    }
-    const body = await response.json();
-
-    return body;
-  }
-
-  async getAllPeople() {
-    return await this.getResource('/people/').then((body) => console.log(body.results));
-  }
-
-  async getPerson(id) {
-    return await this.getResource(`/people/${id}/`).then((body) => console.log(body.name));
-  }
-
-  async getAllPlanets() {
-    return await this.getResource('/planets/').then((body) => console.log(body.results));
-  }
-
-  async getPlanet(id) {
-    return await this.getResource(`/planets/${id}/`).then((body) => console.log(body.name));
-  }
-
-  async getAllStarships() {
-    return await this.getResource('/starships/').then((body) => console.log(body.results));
-  }
-
-  async getStarship(id) {
-    return await this.getResource(`/starships/${id}/`).then((body) => console.log(body.name));
-  }
-}
-
-const swapi = new SwapiService();
-swapi.getAllPeople();
-swapi.getPerson(3);
-swapi.getAllPlanets()
-swapi.getPlanet(3);
-swapi.getAllStarships()
-swapi.getStarship(3);
-
-function App() {
+const App = () => {
   return (
-    <div className="App">Start Project
+    <div>
+      <Header />
+      <RandomPlanet />
+
+      <div className="row mb2">
+        <div className="col-md-6">
+          <ItemList />
+        </div>
+        <div className="col-md-6">
+          <PersonDetails />
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
