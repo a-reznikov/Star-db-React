@@ -5,7 +5,7 @@ import errorIcon from './error-icon.png'
 
 const ErrorIndicator = () => {
   return (
-    <div class="error-indicator">
+    <div className="error-indicator">
       <img src={errorIcon} alt='error icon' />
       <h2 className='title font-weight-bold text-warning'>BOOM!</h2>
       <p className='text-warning'>

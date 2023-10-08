@@ -3,52 +3,51 @@ import SwapiService from '../../services/swapi-service';
 import Spinner from '../spinner'
 import ErrorButton from '../error-button/error-button';
 
-import './person-details.css';
+
+import './item-details.css';
 
 
-export default class PersonDetails extends Component {
+export default class ItemDetails extends Component {
 
   swapiService = new SwapiService();
 
   state = {
-    person: null,
+    item: null,
     loading: true,
   }
 
   componentDidMount() {
-    this.updatePerson();
+    this.updateItem();
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.personId !== prevProps.personId) {
-      this.updatePerson();
+    if (this.props.itemId !== prevProps.itemId) {
+      this.updateItem();
     }
   }
 
-  updatePerson() {
+  updateItem() {
     this.setState({ loading: true });
-    const { personId } = this.props;
-    console.log('personId', personId);
-    if (!personId) {
+    const { itemId } = this.props;
+    if (!itemId) {
       return;
     }
 
     this.swapiService
-      .getPerson(personId)
-      .then((person) => {
-        this.setState({ person, loading: false });
+      .getPerson(itemId)
+      .then((item) => {
+        this.setState({ item, loading: false });
       });
   }
 
   renderDetails() {
-    const { person: { id, name, gender, birthYear, eyeColor } } = this.state;
-    console.log('eyeColor', eyeColor)
+    const { item: { id, name, gender, birthYear, eyeColor } } = this.state;
 
     return (
       <React.Fragment>
-        <img className="person-image"
+        <img className="item-image"
           src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
-          alt='person' />
+          alt='item' />
         <div className="card-body">
           <h4>{name}</h4>
           <ul className="list-group list-group-flush">
@@ -65,6 +64,7 @@ export default class PersonDetails extends Component {
               <span>{eyeColor}</span>
             </li>
           </ul>
+          <ErrorButton />
         </div>
       </React.Fragment>
     )
@@ -77,7 +77,7 @@ export default class PersonDetails extends Component {
 
 
     return (
-      <div className="person-details card">
+      <div className="item-details card">
         {spinner}
         {content}
       </div>
