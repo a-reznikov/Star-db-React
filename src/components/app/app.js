@@ -7,31 +7,35 @@ import SwapiService from "../../services/swapi-service";
 import ErrorBoundry from '../error-boundry';
 import { PersonList, PlanetList, StarshipList } from '../sw-components/item-lists';
 import { PersonDetails, PlanetDetails, StarshipDetails } from '../sw-components/details';
-
+import { SwapiServiceProvider } from '../swapi-service-context';
 
 export default class App extends Component {
 
   swapiService = new SwapiService();
 
   render() {
+    console.log(SwapiServiceProvider)
     return (
       <ErrorBoundry>
-        <div className='stardb-app'>
-          <Header />
-          <PersonDetails itemId={11} />
+        <SwapiServiceProvider value={this.swapiService} >
+          <div className="stardb-app">
+            <Header />
 
-          <PlanetDetails itemId={5} />
+            <PersonDetails itemId={11} />
 
-          <StarshipDetails itemId={9} />
+            <PlanetDetails itemId={5} />
 
-          <PersonList />
+            <StarshipDetails itemId={9} />
 
-          <PlanetList />
+            <PersonList />
 
-          <StarshipList />
+            <StarshipList />
 
-        </div>
-      </ErrorBoundry >
+            <PlanetList />
+
+          </div>
+        </SwapiServiceProvider>
+      </ErrorBoundry>
     );
   }
 
