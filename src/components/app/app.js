@@ -6,7 +6,7 @@ import './app.css';
 import SwapiService from "../../services/swapi-service";
 import ErrorBoundry from '../error-boundry';
 import { PersonList, PlanetList, StarshipList } from '../sw-components/item-lists';
-import { PersonDetails, PlanetDetails, StarshipDetails } from '../sw-components/details';
+import { PersonDetails, PlanetDetails, StarshipDetails } from '../sw-components';
 import { SwapiServiceProvider } from '../swapi-service-context';
 
 export default class App extends Component {
@@ -14,7 +14,7 @@ export default class App extends Component {
   swapiService = new SwapiService();
 
   render() {
-    console.log(SwapiServiceProvider)
+
     return (
       <ErrorBoundry>
         <SwapiServiceProvider value={this.swapiService} >
