@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import Header from '../header';
 import SwapiService from "../../services/swapi-service";
 import ErrorBoundry from '../error-boundry';
-import { PersonList, PlanetList, StarshipList } from '../sw-components/item-lists';
-import { PersonDetails, PlanetDetails, StarshipDetails } from '../sw-components';
 import { SwapiServiceProvider } from '../swapi-service-context';
 import DummySwapiService from '../../services/dummy-swapi-service';
+import RandomPlanet from '../random-planet';
+import { PeoplePage, PlanetsPage, StarshipsPage } from '../pages';
 
 import './app.css';
 
 export default class App extends Component {
 
   state = {
-    swapiService: new DummySwapiService(),
+    swapiService: new SwapiService(),
   }
 
   onServiceChange = () => {
@@ -20,8 +20,6 @@ export default class App extends Component {
 
       const Service = swapiService instanceof SwapiService ?
         DummySwapiService : SwapiService;
-
-      console.log(Service.name);
 
       return {
         swapiService: new Service(),
@@ -37,17 +35,13 @@ export default class App extends Component {
           <div className="stardb-app">
             <Header onServiceChange={this.onServiceChange} />
 
-            <PersonDetails itemId={11} />
+            <RandomPlanet />
 
-            <PlanetDetails itemId={5} />
+            <PeoplePage />
 
-            <StarshipDetails itemId={9} />
+            <PlanetsPage />
 
-            <PersonList />
-
-            <StarshipList />
-
-            <PlanetList />
+            <StarshipsPage />
 
           </div>
         </SwapiServiceProvider>

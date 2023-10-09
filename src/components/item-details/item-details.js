@@ -87,10 +87,10 @@ export default class ItemDetails extends Component {
 
 
     return (
-      <div className="item-details card">
+      <div className="item-details card flex-row">
         {spinner}
         {content}
-      </div>
+      </div >
     )
   }
 }
