@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import SwapiService from '../../services/swapi-service';
-import Spinner from '../spinner'
-import ErrorButton from '../error-button/error-button';
 
+import ErrorButton from '../error-button/error-button';
 
 import './item-details.css';
 
@@ -12,21 +10,19 @@ const Record = ({ item, field, label }) => {
       <span className="term">{label}</span>
       <span>{item[field]}</span>
     </li>
-  )
-}
+  );
+};
 
-export { Record }
-
+export {
+  Record
+};
 
 export default class ItemDetails extends Component {
 
-  swapiService = new SwapiService();
-
   state = {
     item: null,
-    image: null,
-    loading: true,
-  }
+    image: null
+  };
 
   componentDidMount() {
     this.updateItem();
@@ -41,7 +37,6 @@ export default class ItemDetails extends Component {
   }
 
   updateItem() {
-    this.setState({ loading: true });
     const { itemId, getData, getImageUrl } = this.props;
     if (!itemId) {
       return;
@@ -51,22 +46,28 @@ export default class ItemDetails extends Component {
       .then((item) => {
         this.setState({
           item,
-          image: getImageUrl(item),
-          loading: false
+          image: getImageUrl(item)
         });
       });
   }
 
-  renderDetails() {
+  render() {
+
     const { item, image } = this.state;
+    if (!item) {
+      return <span>Select a item from a list</span>;
+    }
+
+    const { name } = item;
 
     return (
-      <React.Fragment>
+      <div className="item-details card">
         <img className="item-image"
           src={image}
-          alt='item' />
+          alt="item" />
+
         <div className="card-body">
-          <h4>{item.name}</h4>
+          <h4>{name}</h4>
           <ul className="list-group list-group-flush">
             {
               React.Children.map(this.props.children, (child) => {
@@ -76,21 +77,7 @@ export default class ItemDetails extends Component {
           </ul>
           <ErrorButton />
         </div>
-      </React.Fragment>
-    )
-  }
-
-  render() {
-    const { loading } = this.state;
-    const spinner = loading ? <Spinner /> : null;
-    const content = !loading ? this.renderDetails() : null;
-
-
-    return (
-      <div className="item-details card flex-row">
-        {spinner}
-        {content}
-      </div >
-    )
+      </div>
+    );
   }
 }
