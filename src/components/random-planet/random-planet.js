@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator';
@@ -15,15 +16,19 @@ export default class RandomPlanet extends Component {
   }
 
   static propTypes = {
-    updateInterval: (props, propsName, componentName) => {
-      const value = props[propsName];
 
-      if (typeof value === 'number' && !isNaN(value)) {
-        return null;
-      }
+    updateInterval: PropTypes.number
 
-      return new TypeError(`${componentName}: ${propsName} must be number`)
-    }
+    //? Type check without library 
+    // updateInterval: (props, propsName, componentName) => {
+    //   const value = props[propsName];
+
+    //   if (typeof value === 'number' && !isNaN(value)) {
+    //     return null;
+    //   }
+
+    //   return new TypeError(`${componentName}: ${propsName} must be number`)
+    // }
   }
 
   state = {
