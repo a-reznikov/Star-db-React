@@ -35,7 +35,6 @@ const App = () => {
             <RandomPlanet />
 
             <Routes>
-
               <Route path='/' exact element={<h2>Welcome to StarDB</h2>} />
               <Route path='/people/:id?' element={<PeoplePage />} />
               <Route path='/planets' element={<PlanetsPage />} />
@@ -47,13 +46,12 @@ const App = () => {
                 element={<LoginPage
                   isLoggedIn={isLoggedIn}
                   onLogin={() => setIsloggedIn(true)} />} />
-
-
               <Route
                 path="/secret"
                 element={
                   <SecretPage isLoggedIn={isLoggedIn} />
                 } />
+              <Route path='*' element={<h2>Page not found</h2>} />
 
             </Routes>
 
