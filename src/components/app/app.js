@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import React, { Component, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, useParams } from 'react-router-dom'
 import Header from '../header';
 import SwapiService from "../../services/swapi-service";
 import ErrorBoundry from '../error-boundry';
@@ -9,49 +9,58 @@ import RandomPlanet from '../random-planet';
 import { PeoplePage, PlanetsPage, StarshipsPage } from '../pages';
 
 import './app.css';
+import StarshipDetails from '../sw-components/starship-details';
 
-export default class App extends Component {
 
-  state = {
-    swapiService: new SwapiService(),
+const App = () => {
+
+  const swapiService = new SwapiService();
+
+  // const [swapi, setSwapiService] = useState(swapiService);
+
+  // const Service = swapi instanceof SwapiService ?
+  //   DummySwapiService : swapi;
+
+  // console.log(Service);
+
+  // setSwapiService(new Service());
+
+
+  function ShowDetails() {
+    const { id } = useParams();
+
+    return <StarshipDetails itemId={id} />
   }
 
-  onServiceChange = () => {
-    this.setState(({ swapiService }) => {
 
-      const Service = swapiService instanceof SwapiService ?
-        DummySwapiService : SwapiService;
+  return (
+    <ErrorBoundry>
+      <SwapiServiceProvider value={swapiService} >
+        <Router>
 
-      return {
-        swapiService: new Service(),
-      }
-    })
-  }
+          <div className="stardb-app">
+            <Header onServiceChange={() => { }} />
 
-  render() {
+            <RandomPlanet />
 
-    return (
-      <ErrorBoundry>
-        <SwapiServiceProvider value={this.state.swapiService} >
-          <Router>
+            <Routes>
 
-            <div className="stardb-app">
-              <Header onServiceChange={this.onServiceChange} />
+              <Route path='/' exact element={<h2>Welcome to StarDB</h2>} />
+              <Route path='/people' element={<PeoplePage />} />
+              <Route path='/planets' element={<PlanetsPage />} />
+              <Route path='/starships' exact element={<StarshipsPage />} />
+              <Route path='/starships/:id' element={<ShowDetails />}
+              />
 
-              <RandomPlanet />
+            </Routes>
 
-              <Routes>
-                <Route path='/people' element={<PeoplePage />} />
-                <Route path='/planets' element={<PlanetsPage />} />
-                <Route path='/starships' element={<StarshipsPage />} />
-              </Routes>
+          </div>
 
-            </div>
-
-          </Router>
-        </SwapiServiceProvider>
-      </ErrorBoundry>
-    );
-  }
+        </Router>
+      </SwapiServiceProvider>
+    </ErrorBoundry>
+  );
 
 };
+
+export default App;
