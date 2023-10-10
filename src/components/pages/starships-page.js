@@ -8,8 +8,7 @@ const StarshipsPage = () => {
 
   return (
     <StarshipList onItemSelected={(itemId) => {
-      const newPath = `/starships/${itemId}`
-      history(newPath);
+      history(itemId);
     }} />
   );
 }
